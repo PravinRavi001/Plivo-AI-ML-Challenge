@@ -1,0 +1,60 @@
+{
+  "utt_0201": [
+    {
+      "start": 12,
+      "end": 27,
+      "label": "CITY",
+      "pii": false
+    },
+    {
+      "start": 31,
+      "end": 36,
+      "label": "PHONE",
+      "pii": true
+    },
+    {
+      "start": 37,
+      "end": 44,
+      "label": "LOCATION",
+      "pii": false
+    },
+    {
+      "start": 58,
+      "end": 60,
+      "label": "PHONE",
+      "pii": true
+    },
+    {
+      "start": 60,
+      "end": 64,
+      "label": "LOCATION",
+      "pii": false
+    },
+    {
+      "start": 64,
+      "end": 67,
+      "label": "PHONE",
+      "pii": true
+    },
+    {
+      "start": 67,
+      "end": 68,
+      "label": "LOCATION",
+      "pii": false
+    }
+  ],
+  "utt_0202": [
+    {
+      "start": 13,
+      "end": 18,
+      "label": "DATE",
+      "pii": true
+    },
+    {
+      "start": 22,
+      "end": 36,
+      "label": "DATE",
+      "pii": true
+    }
+  ]
+}
