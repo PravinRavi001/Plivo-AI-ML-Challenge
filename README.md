@@ -15,7 +15,7 @@ Selected Model: microsoft/xtremedistil-l6-h384-uncased
 
 Why: This model retains the 6-layer depth of DistilBERT but reduces the hidden dimension from 768 to 384. This "narrowing" reduces matrix multiplication costs by ~4x, allowing us to hit 14ms latency without quantization.
 
-2. Data Strategy: Robustness via Formatting Noise
+### Data Strategy: Robustness via Formatting Noise
 Generating high-quality synthetic data was the primary challenge.
 
 Initial Approach: I attempted to simulate complex STT errors (e.g., "four two" for 42). This resulted in massive span misalignment issues where the model would predict the digit but miss the word, leading to 0 precision.
@@ -24,7 +24,7 @@ Final Approach: I switched to a "Robust Digit" strategy. I generate PII as digit
 
 Benefit: This ensures exact span alignment while forcing the model to learn token grouping rather than memorizing simple templates. This makes the model robust to the most common type of STT segmentation errors.
 
-3. Latency Optimization
+### Latency Optimization
 To achieve the sub-20ms target on a CPU with Batch Size 1, I forced single-threaded execution using torch.set_num_threads(1). PyTorch's default multi-threading creates significant overhead ("thrashing") for such small batch sizes; disabling it reduced latency by ~40%.
 
 ### Key Hyperparameters
@@ -44,10 +44,12 @@ pip install -r requirements.txt
 
 ```bash
 python src/train.py \
-  --model_name distilbert-base-uncased \
-  --train data/train.jsonl \
-  --dev data/dev.jsonl \
+  --model_name microsoft/xtremedistil-l6-h384-uncased
+  --train data/train_gen.jsonl
+  --dev data/dev_gen.jsonl
   --out_dir out
+  --epochs 5
+  --lr 5e-4
 ```
 
 ## Predict
@@ -55,7 +57,7 @@ python src/train.py \
 ```bash
 python src/predict.py \
   --model_dir out \
-  --input data/dev.jsonl \
+  --input data/dev_gen.jsonl \
   --output out/dev_pred.json
 ```
 
@@ -63,7 +65,7 @@ python src/predict.py \
 
 ```bash
 python src/eval_span_f1.py \
-  --gold data/dev.jsonl \
+  --gold data/dev_gen.jsonl \
   --pred out/dev_pred.json
 ```
 
