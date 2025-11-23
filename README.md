@@ -4,7 +4,7 @@ This repo is a skeleton for a token-level NER model that tags PII in STT-style t
 Task: in the assignment is to modify the model and training code to improve entity and PII detection quality while keeping **p95 latency below ~20 ms** per utterance (batch size 1, on a reasonably modern CPU).
 
 ## My Solution
-1. Model Selection: The "Shallow & Narrow" Strategy
+Model Selection:
 I initially evaluated distilbert-base-uncased (Baseline) and albert-base-v2.
 
 DistilBERT: ~45ms inference (Too slow).
